@@ -8,6 +8,7 @@
 
 # define PHILO_MAX 200
 
+
 typedef	struct s_philo
 {
 	pthread_t		thread;
@@ -40,5 +41,6 @@ typedef	struct s_program
 
 int	ft_isdigit(char c);
 int argv_check(char **argv);
+int	get_current_time();
 
 #endif

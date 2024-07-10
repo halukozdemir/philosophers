@@ -1,5 +1,5 @@
 NAME = philo
-SRC = philo.c argv_checker.c
+SRC = philo.c argv_checker.c utils.c
 OBJ := $(SRC:.c=.o)
 CFLAGS = # -fsanitize=thread -Wall -Wextra -Werror
 CC = gcc
