@@ -37,10 +37,17 @@ typedef	struct s_program
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t	write_lock;
 	t_philo			*philos;
+	pthread_mutex_t	*forks;
+	int				num_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_times_to_eat;
 }	t_program;
 
 int	ft_isdigit(char c);
 int argv_check(char **argv);
 int	get_current_time();
+long	ft_atol(const char *s);
 
 #endif
