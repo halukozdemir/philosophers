@@ -45,9 +45,19 @@ typedef	struct s_program
 	int				num_times_to_eat;
 }	t_program;
 
-int	ft_isdigit(char c);
-int argv_check(char **argv);
-int	get_current_time();
+int		ft_isdigit(char c);
+int 	argv_check(char **argv);
+size_t	get_current_time();
 long	ft_atol(const char *s);
+void	*philo_routine(void *arg);
+void	*monitor_routine(void *arg);
+int		init_program(t_program *prog, int argc, char **argv);
+void 	init_mutexes(t_program *prog);
+void 	init_philos(t_program *prog);
+void 	create_threads(t_program *prog);
+void 	join_threads(t_program *prog);
+void 	destroy_mutexes(t_program *prog);
+int		ft_isspace(int c);
+
 
 #endif

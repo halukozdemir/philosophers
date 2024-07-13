@@ -1,5 +1,5 @@
 NAME = philo
-SRC = philo.c argv_checker.c utils.c
+SRC = init.c argv_checker.c utils.c routines.c main.c
 OBJ := $(SRC:.c=.o)
 CFLAGS = # -fsanitize=thread -Wall -Wextra -Werror
 CC = gcc
@@ -8,6 +8,9 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

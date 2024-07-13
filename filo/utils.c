@@ -1,6 +1,6 @@
 #include "philo.h"
 
-long long	get_current_time()
+size_t	get_current_time()
 {
 	long long	current_time;
 
@@ -8,6 +8,22 @@ long long	get_current_time()
 	gettimeofday(&tv, NULL);
 	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	return (current_time);
+}
+
+int		ft_isspace(int c)
+{
+	const char	*str;
+	int			i;
+
+	i = 0;
+	str = " \n\t\v\f\r";
+	while (c != str[i])
+	{
+		if (str[i] == '\0')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 long	ft_atol(const char *s)

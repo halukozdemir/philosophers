@@ -1,4 +1,5 @@
 #include "philo.h"
+#include "stdlib.h"
 
 void init_mutexes(t_program *prog)
 {
@@ -16,13 +17,38 @@ void init_mutexes(t_program *prog)
 	}
 }
 
-void init_philo(t_philo *philo, t_program *prog, int id, size_t start_time)
-{
-	philo->id = id;
-	philo->num_of_philos = prog->num_of_philos;
-	philo->dead = &prog->dead_flag;
-	
+void init_philo(t_philo *philo, t_program *prog, int id, size_t start_time) {
+    philo->id = id;
+    philo->num_of_philos = prog->num_of_philos;
+    philo->dead = &prog->dead_flag;
+    philo->l_fork = &prog->forks[(id - 1) % prog->num_of_philos]; // Sol çatal (id - 1)
+    philo->r_fork = &prog->forks[id % prog->num_of_philos]; // Sağ çatal (id)
+    philo->write_lock = &prog->write_lock;
+    philo->dead_lock = &prog->dead_lock;
+    philo->meal_lock = &prog->meal_lock;
+    philo->eating = 0;
+    philo->meals_eaten = 0;
+    philo->last_meal = start_time;
+    philo->start_time = start_time;
+    philo->time_to_die = prog->time_to_die;
+    philo->time_to_eat = prog->time_to_eat;
+    philo->time_to_sleep = prog->time_to_sleep;
+    philo->num_times_to_eat = prog->num_times_to_eat;
 }
+
+void init_philos(t_program *prog) {
+    int i;
+    size_t start_time;
+
+    i = 0;
+    start_time = get_current_time();
+    prog->philos = malloc(sizeof(t_philo) * prog->num_of_philos);
+    while (i < prog->num_of_philos) {
+        init_philo(&prog->philos[i], prog, i + 1, start_time);
+        i++; // i'yi arttırmayı unutmayın
+    }
+}
+
 
 int	init_program(t_program *prog, int argc, char **argv)
 {
@@ -34,4 +60,5 @@ int	init_program(t_program *prog, int argc, char **argv)
 	prog->dead_flag = 0;
 	init_mutexes(prog);
 	init_philos(prog);
+	return (0);
 }
