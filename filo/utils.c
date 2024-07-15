@@ -62,9 +62,9 @@ int	message(t_philosopher *philo, char *str)
 		pthread_mutex_unlock(philo->end_mutex);
 		return (EXIT_FAILURE);
 	}
-	printf("%ld %d %s\n", (get_current_time() - *philo->start_time), philo->id, str);
+	printf("%zu %d %s\n", (get_current_time() - *philo->start_time), philo->id, str);
 	pthread_mutex_unlock(philo->message);
-	pthread_mutex_destroy(philo->end_mutex);
+	pthread_mutex_unlock(philo->end_mutex);
 	return (EXIT_SUCCESS);
 }
 

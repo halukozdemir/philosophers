@@ -14,7 +14,7 @@ int	dead_philo(t_data *data)
 			pthread_mutex_unlock(&data->philo[i].is_not_eating_mutex);
 			time = get_current_time();
 			pthread_mutex_lock(&data->philo[i].time_of_last_meal_mutex);
-			if (time - data->philo[i].time_of_last_meal < data->time_to_die)
+			if (time - data->philo[i].time_of_last_meal > data->time_to_die)
 			{
 				message(&data->philo[i], "died");
 				mutex_end(&data->philo[i], 1);

@@ -50,6 +50,7 @@ int	init_mutex(t_data *data)
 		i++;
 	}
 	i = 0;
+	pthread_mutex_init(&data->message, NULL);
 	while (i < data->number_of_philo)
 	{
 		data->philo[i].message = &data->message;

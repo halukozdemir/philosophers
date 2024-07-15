@@ -10,7 +10,7 @@ void	mutex_is_not_eating(t_philosopher *philo, int is_not_eating)
 void	mutex_nbr_of_meals(t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->nbr_of_meals_mutex);
-	if (philo->nbr_of_meals == -1)
+	if (philo->nbr_of_meals != -1)
 		philo->nbr_of_meals++;
 	pthread_mutex_unlock(&philo->nbr_of_meals_mutex);
 }

@@ -36,5 +36,7 @@ void	custom_sleep_eating(t_philosopher *philo)
 void	custom_sleep_sleeping(t_philosopher *philo, size_t time)
 {
 	while (get_current_time() - time < philo->time_to_sleep)
+	{
 		usleep(10);
+	}
 }

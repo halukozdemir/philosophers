@@ -44,7 +44,7 @@ void	take_forks(t_philosopher *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		message(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
+		pthread_mutex_lock(philo->right_fork);
 		message(philo, "has taken a fork");
 	}
 }
