@@ -1,5 +1,5 @@
 NAME = philo
-SRC = argv_checker.c init.c main.c routine.c utils.c
+SRC = argv_checker.c close.c eating.c init.c main.c mutex_utils.c philosophers.c solo_philo.c time_utils.c utils.c
 OBJ := $(SRC:.c=.o)
 CFLAGS = -fsanitize=thread -Wall -Wextra -Werror
 CC = gcc

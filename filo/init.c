@@ -1,66 +1,105 @@
 #include "philo.h"
 
-int	init_data(t_data *data, char **argv)
+int	init_data(t_data *data, int argc, char **argv)
 {
-	data->philo_count = ft_atol(argv[1]);
-	if (data->philo_count < 1 && printf("%d\n", ERR_ARG))
-		return (1);
-	data->philo_live_time = ft_atol(argv[2]);
-	data->philo_eat_time = ft_atol(argv[3]);
-	data->philo_sleep_time = ft_atol(argv[4]);
-	data->philo_dead = 0;
-	if (argv[5])
-		data->philo_must_eat = ft_atol(argv[5]);
+	data->start_time = get_current_time();
+	data->number_of_philo = ft_atol(argv[1]);
+	data->time_to_die = ft_atol(argv[2]);
+	data->time_to_eat = ft_atol(argv[3]);
+	data->time_to_sleep = ft_atol(argv[4]);
+	if (argc == 6)
+		data->nbr_of_times_eat = ft_atol(argv[5]);
 	else
-		data->philo_must_eat = -1;
-	if (pthread_mutex_init(&data->display, NULL) && printf("%s\n", ERR_MUTEX_INIT))
-		return (1);
-	if (pthread_mutex_init(&data->philo_dead_mutex, NULL) && printf("%s\n", ERR_MUTEX_INIT))
-		return (1);
-	return (0);
+		data->nbr_of_times_eat = -1;
+	data->end = 0;
+	return (EXIT_SUCCESS);
 }
 
-pthread_mutex_t *init_forks(t_data *data)
+int	init_philosophers(t_data *data)
 {
-	int				i;
-	pthread_mutex_t	*forks;
+	int	i;
 
-	forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
-	if (!forks && printf("%s\n", ERR_MALLOC))
-		return (NULL);
 	i = 0;
-	while (i < data->philo_count)
+	while (i < data->number_of_philo)
 	{
-		if (pthread_mutex_init(&forks[i], NULL) != 0 && printf("%s\n", ERR_MUTEX_INIT))
-			return (NULL);
+		data->philo[i].id = i + 1;
+		data->philo[i].nbr_of_meals = 0;
+		data->philo[i].is_not_eating = 1;
+		data->philo[i].end = &data->end;
+		data->philo[i].time_to_eat = data->time_to_eat;
+		data->philo[i].time_to_sleep = data->time_to_sleep;
+		data->philo[i].start_time = &data->start_time;
+		data->philo[i].time_of_last_meal = data->start_time;
+		pthread_mutex_init(&data->philo[i].time_of_last_meal_mutex, NULL);
+		pthread_mutex_init(&data->philo[i].nbr_of_meals_mutex, NULL);
+		pthread_mutex_init(&data->philo[i].is_not_eating_mutex, NULL);
 		i++;
 	}
-	return (forks);
+	return (EXIT_SUCCESS);
 }
 
-t_philo	*init_philo(t_data *data, pthread_mutex_t *forks)
+int	init_mutex(t_data *data)
 {
-	int		i;
-	t_philo	*philo;
+	int	i;
 
-	philo = malloc(sizeof(t_philo) * data->philo_count);
-	if (!philo && printf("%s\n", ERR_MALLOC))
-		return (NULL);
 	i = 0;
-	while (i < data->philo_count)
+	pthread_mutex_init(&data->end_mutex, NULL);
+	while (i < data->number_of_philo)
 	{
-		philo[i].philos_id = i + 1;
-		if (data->philo_must_eat)
-			philo[i].philo_loop = data->philo_must_eat;
-		else
-			philo[i].philo_loop = 0;
-		philo[i].philo_last_eat = get_current_time();
-		philo[i].left_fork = &forks[i];
-		philo[i].right_fork = &forks[(i + 1) % data->philo_count];
-		philo[i].data = data;//işlenecek
-		if (pthread_mutex_init(&philo[i].philo_last_eat_mutex, NULL) && printf("%s\n", ERR_MUTEX_INIT))
-			return (NULL);
+		data->philo[i].end_mutex = &data->end_mutex;
 		i++;
 	}
-	return (philo);
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		data->philo[i].message = &data->message;
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	init_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		pthread_mutex_init(&data->forks[i], NULL);
+		i++;
+	}
+	i = 0;
+	while (i < data->number_of_philo)
+	{
+		data->philo[i].left_fork = &data->forks[i - 1];
+		data->philo[i].right_fork = &data->forks[i];
+		i++;
+	}
+	data->philo[0].left_fork = &data->forks[data->number_of_philo - 1];
+	return (EXIT_SUCCESS);
+}
+
+int ft_init(t_data *data, int argc, char **argv)
+{
+	if (init_data(data, argc, argv))
+	{
+		printf("Error: init_data failed.\n");
+		return (EXIT_FAILURE);
+	}
+	if (init_philosophers(data))
+	{
+		printf("Error: init_philosophers failed.\n");
+		return (EXIT_FAILURE);
+	}
+	if (init_forks(data))
+	{
+		printf("Error: fork failed.\n");
+		return (EXIT_FAILURE);
+	}
+	if (init_mutex(data))
+	{
+		printf("Error: mutex failed.\n");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }

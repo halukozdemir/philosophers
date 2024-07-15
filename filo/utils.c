@@ -9,33 +9,6 @@ void	ft_usleep(size_t waiting_time)
 		usleep(100);
 }
 
-void display(t_philo *philo, char *msg)
-{
-    long long time;
-    pthread_mutex_lock(&philo->data->display);
-    pthread_mutex_lock(&philo->data->philo_dead_mutex);
-    if (philo->data->philo_dead == 1)
-    {
-        pthread_mutex_unlock(&philo->data->philo_dead_mutex);
-        pthread_mutex_unlock(&philo->data->display);
-        return;
-    }
-    time = get_current_time() - philo->philo_start;
-    printf("%lld %d %s\n", time, philo->philos_id, msg);
-    pthread_mutex_unlock(&philo->data->philo_dead_mutex);
-    pthread_mutex_unlock(&philo->data->display);
-}
-
-size_t	get_current_time()
-{
-	long long	current_time;
-
-	struct timeval	tv;
-	gettimeofday(&tv, NULL);
-	current_time = (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
-	return (current_time);
-}
-
 int		ft_isspace(int c)
 {
 	const char	*str;
@@ -78,4 +51,33 @@ long	ft_atol(const char *s)
 		i++;
 	}
 	return (res * coeff);
+}
+int	message(t_philosopher *philo, char *str)
+{
+	pthread_mutex_lock(philo->message);
+	pthread_mutex_lock(philo->end_mutex);
+	if (*philo->end == 1 && ft_strncmp(str, "died", 4) == 0)
+	{
+		pthread_mutex_unlock(philo->message);
+		pthread_mutex_unlock(philo->end_mutex);
+		return (EXIT_FAILURE);
+	}
+	printf("%ld %d %s\n", (get_current_time() - *philo->start_time), philo->id, str);
+	pthread_mutex_unlock(philo->message);
+	pthread_mutex_destroy(philo->end_mutex);
+	return (EXIT_SUCCESS);
+}
+
+int	ft_strncmp(char *str, char *cmp, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (str[i] != cmp[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }

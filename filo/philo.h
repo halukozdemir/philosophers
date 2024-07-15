@@ -21,42 +21,71 @@
 # define THINKING "is thinking"
 # define DEAD "died"
 
-typedef	struct s_data
+typedef struct s_philosopher
 {
-	int				philo_count;
-	size_t			philo_live_time;
-	size_t			philo_eat_time;
-	size_t			philo_sleep_time;
-	size_t			philo_must_eat;
-	size_t			philo_dead;
-	pthread_mutex_t	display;
-	pthread_mutex_t philo_dead_mutex;
-}	t_data;
+	pthread_t		thread;
+	int				id;
+	size_t			*start_time;
+	pthread_mutex_t	time_of_last_meal_mutex;
+	size_t			time_of_last_meal;
+	pthread_mutex_t	nbr_of_meals_mutex;
+	int				nbr_of_meals;
+	pthread_mutex_t	is_not_eating_mutex;
+	int				is_not_eating;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
+	pthread_mutex_t	*message;
+	pthread_mutex_t	*end_mutex;
+	int				*end;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+}					t_philosopher;
 
-typedef	struct s_philo
+typedef struct s_data
 {
-	int				philos_id;
-	int				philo_loop;
-	size_t			philo_start;
-	size_t			philo_last_eat;
-	pthread_mutex_t *left_fork;
-	pthread_mutex_t *right_fork;
-	pthread_mutex_t	philo_last_eat_mutex;
-	pthread_t		philo_thread;
-	t_data			*data;
-}	t_philo;
+	int				number_of_philo;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				nbr_of_times_eat;
+	size_t			start_time;
+	t_philosopher	philo[PHILO_MAX];
+	pthread_mutex_t	forks[PHILO_MAX];
+	pthread_mutex_t	message;
+	pthread_mutex_t	end_mutex;
+	int				end;
+}					t_data;
 
-int		ft_isdigit(char c);
-int 	argv_check(char **argv);
+int	ft_isdigit(char c);
+int argv_check(char **argv);
+int	ft_close(t_data *data);
+int	everyone_ate(t_data *data);
+int	sleeping(t_philosopher *philo);
+void	take_forks(t_philosopher *philo);
+int	eating(void	*philo_ptr);
+int	init_data(t_data *data, int argc, char **argv);
+int	init_philosophers(t_data *data);
+int	init_mutex(t_data *data);
+int	init_forks(t_data *data);
+int ft_init(t_data *data, int argc, char **argv);
+void	mutex_is_not_eating(t_philosopher *philo, int is_not_eating);
+void	mutex_nbr_of_meals(t_philosopher *philo);
+void	mutex_end(t_philosopher *philo, int value);
+int	end_is_true_data(t_data *data);
+int	end_is_true_philo(t_philosopher *philo);
+int	dead_philo(t_data *data);
+void	*living_philo(void *philosopher);
+void	check_end(t_data *data);
+int	philosophers(t_data *data);
+void	solo_philo(t_data *data);
 size_t	get_current_time();
-long	ft_atol(const char *s);
-pthread_mutex_t *init_forks(t_data *data);
-t_philo	*init_philo(t_data *data, pthread_mutex_t *forks);
+void	init_time(t_data *data);
+void	custom_sleep_eating(t_philosopher *philo);
+void	custom_sleep_sleeping(t_philosopher *philo, size_t time);
+void	ft_usleep(size_t waiting_time);
 int		ft_isspace(int c);
-int		start(t_data *data, t_philo *philo);
-void 	ft_usleep(size_t waiting_time);
-void	display(t_philo *philo, char *msg);
-int	init_data(t_data *data, char **argv);
-
+long	ft_atol(const char *s);
+int	message(t_philosopher *philo, char *str);
+int	ft_strncmp(char *str, char *cmp, size_t len);
 
 #endif
