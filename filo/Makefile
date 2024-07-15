@@ -1,7 +1,7 @@
 NAME = philo
-SRC = init.c argv_checker.c utils.c routines.c main.c
+SRC = argv_checker.c init.c main.c routine.c utils.c
 OBJ := $(SRC:.c=.o)
-CFLAGS = # -fsanitize=thread -Wall -Wextra -Werror
+CFLAGS = -fsanitize=thread -Wall -Wextra -Werror
 CC = gcc
 
 all: $(NAME)

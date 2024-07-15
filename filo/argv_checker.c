@@ -13,7 +13,7 @@ int argv_check(char **argv)
 	int	i;
 	int j;
 
-	j = 0;
+	j = 1;
 	i = 0;
 	while (argv[j])
 	{

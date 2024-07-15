@@ -5,59 +5,58 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <pthread.h>
+#include <stdlib.h>
 
 # define PHILO_MAX 200
+# define ERR_ARG 0
+# define ERR_MALLOC "Memory Allocate Error."
+# define ERR_MUTEX_INIT "Mutex Init Error."
+# define ERR_THREAD "Thread Create Error."
+#define ERR_THREAD_JOIN "Thread Join Error."
+# define ERR_INVALID_ARG "Invalid Arg. Error."
 
+# define FORK "has taken a fork"
+# define EATING "is eating"
+# define SLEEPING "is sleeping"
+# define THINKING "is thinking"
+# define DEAD "died"
+
+typedef	struct s_data
+{
+	int				philo_count;
+	size_t			philo_live_time;
+	size_t			philo_eat_time;
+	size_t			philo_sleep_time;
+	size_t			philo_must_eat;
+	size_t			philo_dead;
+	pthread_mutex_t	display;
+	pthread_mutex_t philo_dead_mutex;
+}	t_data;
 
 typedef	struct s_philo
 {
-	pthread_t		thread;
-	int				id;
-	int				eating;
-	int				meals_eaten;
-	size_t			last_meal;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
-	size_t			start_time;
-	int				num_of_philos;
-	int				num_times_to_eat;
-	int				*dead;
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*write_lock;
-	pthread_mutex_t	*dead_lock;
-	pthread_mutex_t	*meal_lock;
+	int				philos_id;
+	int				philo_loop;
+	size_t			philo_start;
+	size_t			philo_last_eat;
+	pthread_mutex_t *left_fork;
+	pthread_mutex_t *right_fork;
+	pthread_mutex_t	philo_last_eat_mutex;
+	pthread_t		philo_thread;
+	t_data			*data;
 }	t_philo;
-
-typedef	struct s_program
-{
-	int				dead_flag;
-	pthread_mutex_t	dead_lock;
-	pthread_mutex_t	meal_lock;
-	pthread_mutex_t	write_lock;
-	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	int				num_of_philos;
-	int				time_to_die;
-	int				time_to_eat;
-	int				time_to_sleep;
-	int				num_times_to_eat;
-}	t_program;
 
 int		ft_isdigit(char c);
 int 	argv_check(char **argv);
 size_t	get_current_time();
 long	ft_atol(const char *s);
-void	*philo_routine(void *arg);
-void	*monitor_routine(void *arg);
-int		init_program(t_program *prog, int argc, char **argv);
-void 	init_mutexes(t_program *prog);
-void 	init_philos(t_program *prog);
-void 	create_threads(t_program *prog);
-void 	join_threads(t_program *prog);
-void 	destroy_mutexes(t_program *prog);
+pthread_mutex_t *init_forks(t_data *data);
+t_philo	*init_philo(t_data *data, pthread_mutex_t *forks);
 int		ft_isspace(int c);
+int		start(t_data *data, t_philo *philo);
+void 	ft_usleep(size_t waiting_time);
+void	display(t_philo *philo, char *msg);
+int	init_data(t_data *data, char **argv);
 
 
 #endif

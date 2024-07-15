@@ -1,5 +1,31 @@
 #include "philo.h"
 
+void	ft_usleep(size_t waiting_time)
+{
+	size_t time;
+
+	time = get_current_time();
+	while (get_current_time() - time < waiting_time)
+		usleep(100);
+}
+
+void display(t_philo *philo, char *msg)
+{
+    long long time;
+    pthread_mutex_lock(&philo->data->display);
+    pthread_mutex_lock(&philo->data->philo_dead_mutex);
+    if (philo->data->philo_dead == 1)
+    {
+        pthread_mutex_unlock(&philo->data->philo_dead_mutex);
+        pthread_mutex_unlock(&philo->data->display);
+        return;
+    }
+    time = get_current_time() - philo->philo_start;
+    printf("%lld %d %s\n", time, philo->philos_id, msg);
+    pthread_mutex_unlock(&philo->data->philo_dead_mutex);
+    pthread_mutex_unlock(&philo->data->display);
+}
+
 size_t	get_current_time()
 {
 	long long	current_time;
