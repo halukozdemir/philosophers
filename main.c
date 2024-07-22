@@ -25,6 +25,8 @@ int	argv_check(char **argv)
 int main(int argc, char **argv)
 {
 	t_data	*data;
+
+	data = malloc(sizeof(t_data));
 	if(((argc < 5 || argc > 6) || !argv_check(argv)) && printf("%s", ERR_ARG))
 		return (EXIT_FAILURE);
 	if (init_all(data, argc, argv) && printf("%s", ERR_INIT))

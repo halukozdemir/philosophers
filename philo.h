@@ -19,25 +19,28 @@ typedef struct s_forks
 	bool			is_use;
 }			t_forks;
 
+typedef struct s_data t_data;
 
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
 	size_t			time_of_last_meal;
-	int				nbr_of_meals; //for optional
+	int				nbr_of_meals;
 	bool			is_eating;
+	int				*number_of_philo;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*message;
 	pthread_mutex_t	*end_mutex;
 	bool			end;
+	bool			is_thinking;
+	struct s_data	*t_data;
 }					t_philo;
-
 
 typedef struct s_data
 {
-	long			number_of_philo;
+	int				number_of_philo;
 	size_t			timo_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
@@ -51,12 +54,17 @@ typedef struct s_data
 }					t_data;
 
 
-int	ft_isdigit(int c);
+
+int	init_mutex(t_data *data);
+int	init_forks(t_data *data);
+int	init_philos(t_data *data);
+int	init_data(t_data *data, int argc, char **argv);
 int	init_all(t_data *data, int argc, char **argv);
+int	argv_check(char **argv);
+void	*routine(void *arg);
 int	philo_start(t_data *data);
-long	ft_atol(const char *str);
+long	ft_atol(char *str);
+int	ft_isdigit(int c);
 size_t	get_current_time();
-
-
 
 #endif

@@ -29,12 +29,12 @@ int	init_forks(t_data *data)
 	i = 0;
 	while(i < data->number_of_philo - 1)
 	{
-		data->philo[i].l_fork = &data->forks[i];
-		data->philo[i].r_fork = &data->forks[i + 1];
+		data->philo[i].l_fork = &data->forks[i].fork_mutex;
+		data->philo[i].r_fork = &data->forks[i + 1].fork_mutex;
 		i++;
 	}
-	data->philo[i].l_fork = &data->forks[i];
-	data->philo[i].r_fork = &data->forks[0];
+	data->philo[i].l_fork = &data->forks[i].fork_mutex;
+	data->philo[i].r_fork = &data->forks[0].fork_mutex;
 	return (EXIT_SUCCESS);
 }
 
@@ -44,13 +44,16 @@ int	init_philos(t_data *data)
 	int i;
 
 	i = 0;
-	while(i <= data->number_of_philo)
+	while(i < data->number_of_philo)
 	{
 		data->philo[i].id = i + 1;
 		data->philo[i].time_of_last_meal = data->start_time;
 		data->philo[i].nbr_of_meals = 0;
 		data->philo[i].is_eating = false;
 		data->philo[i].end = false;
+		data->philo[i].number_of_philo = &data->number_of_philo;
+		data->philo[i].is_thinking = false;
+		data->philo[i].t_data = data;
 		i++;
 	}
 	return(EXIT_SUCCESS);
