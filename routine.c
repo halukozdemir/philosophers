@@ -13,20 +13,20 @@ void    dead_check(t_philo *philo)
 
 void    thinking(t_philo *philo)
 {
-    dead_check(philo);
+    //dead_check(philo);
     ft_print(philo, "thinking");
 }
 
 void    sleeping(t_philo *philo)
 {
-    dead_check(philo);
+    //dead_check(philo);
     ft_print(philo, "sleeping");
     ft_usleep(philo->t_data->time_to_sleep);
 }
 
 void    eating(t_philo *philo)
 {
-    dead_check(philo);
+    //dead_check(philo);
     pthread_mutex_lock(philo->l_fork);
     ft_print(philo, "fork");
     pthread_mutex_lock(philo->r_fork);
@@ -55,6 +55,7 @@ void *routine(void *arg) {
         {
             eating(philo);
             sleeping(philo);
+            thinking(philo);
         }
     }
     ft_print(philo, "died");
@@ -71,6 +72,7 @@ int	philo_start(t_data *data)
 	{
         data->philo[i].time_of_last_meal = get_current_time();
 		pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
+        usleep(10);
 		i++;
 	}
 	i = 0;

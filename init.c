@@ -67,8 +67,6 @@ int	init_data(t_data *data, int argc, char **argv)
 		data->nbr_of_times_eat = ft_atol(argv[5]);
 	else
 		data->nbr_of_times_eat = -1;
-
-	// data->start_time = get_current_time();
 	data->end = false;
 	return(EXIT_SUCCESS);
 }

@@ -68,12 +68,12 @@ int	ft_print(t_philo *philo, char *state)
 		}
 		else if (ft_strcmp(state, "eating") == 0)
 		{
-			printf("%zu %d eating\n", get_current_time() - philo->t_data->start_time, philo->id);
+			printf("%zu %d is eating\n", get_current_time() - philo->t_data->start_time, philo->id);
 			pthread_mutex_unlock(philo->message);
 		}
 		else if (ft_strcmp(state, "sleeping") == 0)
 		{
-			printf("%zu %d sleeping\n", get_current_time() - philo->t_data->start_time, philo->id);
+			printf("%zu %d is sleeping\n", get_current_time() - philo->t_data->start_time, philo->id);
 			pthread_mutex_unlock(philo->message);
 		}
 		else if (ft_strcmp(state, "thinking") == 0)
