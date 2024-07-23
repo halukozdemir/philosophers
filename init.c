@@ -22,19 +22,18 @@ int	init_forks(t_data *data)
 	i = 0;
 	while(i < data->number_of_philo)
 	{
-		pthread_mutex_init(&data->forks[i].fork_mutex, NULL);
-		data->forks[i].is_use = false;
+		pthread_mutex_init(&data->forks[i], NULL);
 		i++;
 	}
 	i = 0;
 	while(i < data->number_of_philo - 1)
 	{
-		data->philo[i].l_fork = &data->forks[i].fork_mutex;
-		data->philo[i].r_fork = &data->forks[i + 1].fork_mutex;
+		data->philo[i].l_fork = &data->forks[i];
+		data->philo[i].r_fork = &data->forks[i + 1];
 		i++;
 	}
-	data->philo[i].l_fork = &data->forks[i].fork_mutex;
-	data->philo[i].r_fork = &data->forks[0].fork_mutex;
+	data->philo[i].l_fork = &data->forks[i];
+	data->philo[i].r_fork = &data->forks[0];
 	return (EXIT_SUCCESS);
 }
 
@@ -47,10 +46,8 @@ int	init_philos(t_data *data)
 	while(i < data->number_of_philo)
 	{
 		data->philo[i].id = i + 1;
-		data->philo[i].time_of_last_meal = data->start_time;
 		data->philo[i].nbr_of_meals = 0;
-		data->philo[i].is_eating = false;
-		data->philo[i].end = false;
+		data->philo[i].end = &data->end;
 		data->philo[i].number_of_philo = &data->number_of_philo;
 		data->philo[i].is_thinking = false;
 		data->philo[i].t_data = data;
@@ -71,7 +68,7 @@ int	init_data(t_data *data, int argc, char **argv)
 	else
 		data->nbr_of_times_eat = -1;
 
-	data->start_time = get_current_time();
+	// data->start_time = get_current_time();
 	data->end = false;
 	return(EXIT_SUCCESS);
 }

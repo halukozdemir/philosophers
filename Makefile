@@ -1,5 +1,5 @@
 NAME = philo
-SRC = init.c main.c utils.c routine.c
+SRC = init.c main.c utils.c utils2.c routine.c
 OBJ := $(SRC:.c=.o)
 CFLAGS = #-Wall -Wextra -Werror
 CC = gcc

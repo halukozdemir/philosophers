@@ -13,27 +13,18 @@
 
 # define PHILO_MAX 200
 
-typedef struct s_forks
-{
-	pthread_mutex_t	fork_mutex;
-	bool			is_use;
-}			t_forks;
-
-typedef struct s_data t_data;
-
 typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
 	size_t			time_of_last_meal;
 	int				nbr_of_meals;
-	bool			is_eating;
 	int				*number_of_philo;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*message;
 	pthread_mutex_t	*end_mutex;
-	bool			end;
+	bool			*end;
 	bool			is_thinking;
 	struct s_data	*t_data;
 }					t_philo;
@@ -47,7 +38,7 @@ typedef struct s_data
 	int				nbr_of_times_eat;
 	size_t			start_time;
 	t_philo			philo[PHILO_MAX];
-	t_forks			forks[PHILO_MAX];
+	pthread_mutex_t	forks[PHILO_MAX];
 	pthread_mutex_t	message;
 	pthread_mutex_t	end_mutex;
 	bool			end;
@@ -66,5 +57,8 @@ int	philo_start(t_data *data);
 long	ft_atol(char *str);
 int	ft_isdigit(int c);
 size_t	get_current_time();
+void	ft_usleep(size_t	ms);
+int	ft_print(t_philo *philo, char *state);
+int	ft_strcmp(char *s1, char *s2);
 
 #endif

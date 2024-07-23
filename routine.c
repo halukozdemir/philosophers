@@ -1,35 +1,63 @@
 #include "philo.h"
+#include <errno.h>
+
+void    dead_check(t_philo *philo)
+{
+    if (get_current_time() - philo->time_of_last_meal > philo->t_data->timo_to_die)
+    {
+        pthread_mutex_lock(philo->end_mutex);
+        *philo->end = true;
+        pthread_mutex_unlock(philo->end_mutex);
+    }
+}
+
+void    thinking(t_philo *philo)
+{
+    dead_check(philo);
+    ft_print(philo, "thinking");
+}
+
+void    sleeping(t_philo *philo)
+{
+    dead_check(philo);
+    ft_print(philo, "sleeping");
+    ft_usleep(philo->t_data->time_to_sleep);
+}
+
+void    eating(t_philo *philo)
+{
+    dead_check(philo);
+    pthread_mutex_lock(philo->l_fork);
+    ft_print(philo, "fork");
+    pthread_mutex_lock(philo->r_fork);
+    ft_print(philo, "fork");
+    ft_print(philo, "eating");
+    philo->time_of_last_meal = get_current_time() - philo->t_data->start_time;
+    ft_usleep(philo->t_data->time_to_eat);
+    pthread_mutex_unlock(philo->l_fork);
+    pthread_mutex_unlock(philo->r_fork);
+}
+
 
 void *routine(void *arg) {
+
     t_philo *philo = (t_philo *)arg;
-    //printf("%d numaralı filozofun sol çatalı: %d, sağ çatalı: %d \n", philo->id, philo->l_fork_index, philo->r_fork_index);
+
     while (1)
     {
-        pthread_mutex_lock(philo->l_fork);
-        pthread_mutex_lock(philo->r_fork);
-        pthread_mutex_lock(philo->message);
-        if(philo->t_data->forks[philo->id].is_use == false && philo->t_data->forks[(philo->id + 1) % *(philo->number_of_philo)].is_use == false)
+        if (philo->id % 2 != 0)
         {
-            philo->t_data->forks[philo->id].is_use = true;
-            philo->t_data->forks[(philo->id + 1) % *(philo->number_of_philo)].is_use = true;
-            printf("%d numaralı filo çatal aldı. \n", philo->id);
-            printf("%d numaralı filo çatal aldı. \n", philo->id);
-            printf("%d numaralı filo yemek yedi. \n", philo->id);
-            usleep(1000000);
-            philo->t_data->forks[philo->id].is_use = false;
-            philo->t_data->forks[(philo->id + 1) % *(philo->number_of_philo)].is_use = false;
+            thinking(philo);
+            eating(philo);
+            sleeping(philo);
         }
-        else if (philo->is_thinking == false)
+        else
         {
-            printf("%d numaralı filo düşünüyor. \n", philo->id);
+            eating(philo);
+            sleeping(philo);
         }
-        pthread_mutex_unlock(philo->l_fork);
-        pthread_mutex_unlock(philo->r_fork);
-        pthread_mutex_unlock(philo->message);
     }
-
-
-
+    ft_print(philo, "died");
     return NULL;
 }
 
@@ -38,8 +66,11 @@ int	philo_start(t_data *data)
 	int	i;
 
 	i = 0;
+    data->start_time = get_current_time();
 	while(i < data->number_of_philo)
 	{
+        data->philo[i].time_of_last_meal = get_current_time();
+        printf("%zu*** \n", data->philo[i].time_of_last_meal);
 		pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
 		i++;
 	}
