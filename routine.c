@@ -70,7 +70,6 @@ int	philo_start(t_data *data)
 	while(i < data->number_of_philo)
 	{
         data->philo[i].time_of_last_meal = get_current_time();
-        printf("%zu*** \n", data->philo[i].time_of_last_meal);
 		pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
 		i++;
 	}
