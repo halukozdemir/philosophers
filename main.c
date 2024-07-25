@@ -25,6 +25,7 @@ int	argv_check(char **argv)
 int main(int argc, char **argv)
 {
 	t_data	*data;
+	int	i;
 
 	data = malloc(sizeof(t_data));
 	if(((argc < 5 || argc > 6) || !argv_check(argv)) && printf("%s", ERR_ARG))
@@ -32,5 +33,4 @@ int main(int argc, char **argv)
 	if (init_all(data, argc, argv) && printf("%s", ERR_INIT))
 		return (EXIT_FAILURE);
 	philo_start(data);
-
 }

@@ -23,6 +23,7 @@ int	init_forks(t_data *data)
 	while(i < data->number_of_philo)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
+		pthread_mutex_init(&data->philo[i].philo_id, NULL);
 		i++;
 	}
 	i = 0;
@@ -46,6 +47,7 @@ int	init_philos(t_data *data)
 	while(i < data->number_of_philo)
 	{
 		data->philo[i].id = i + 1;
+		data->philo[i].fake_id = i + 1;
 		data->philo[i].nbr_of_meals = 0;
 		data->philo[i].end = &data->end;
 		data->philo[i].number_of_philo = &data->number_of_philo;

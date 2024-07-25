@@ -3,6 +3,7 @@
 		"philo.h": "c",
 		"stdlib.h": "c",
 		"err.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"pthread.h": "c"
 	}
 }

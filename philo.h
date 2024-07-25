@@ -17,6 +17,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
+	int				fake_id;
 	size_t			time_of_last_meal;
 	int				nbr_of_meals;
 	int				*number_of_philo;
@@ -24,6 +25,7 @@ typedef struct s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*message;
 	pthread_mutex_t	*end_mutex;
+	pthread_mutex_t philo_id;
 	bool			*end;
 	bool			is_thinking;
 	struct s_data	*t_data;
@@ -60,5 +62,6 @@ size_t	get_current_time();
 void	ft_usleep(size_t	ms);
 int	ft_print(t_philo *philo, char *state);
 int	ft_strcmp(char *s1, char *s2);
+int    dead_check(t_philo *philo);
 
 #endif
