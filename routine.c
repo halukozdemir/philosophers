@@ -51,8 +51,6 @@ void *routine(void *arg) {
     {
         if (philo->fake_id % 2 != 0 && philo->fake_id != 5)
         {
-            if (dead_check(philo))
-                break;
             eating(philo);
             sleeping(philo);
             thinking(philo);
@@ -60,8 +58,6 @@ void *routine(void *arg) {
         else
         {
             thinking(philo);
-            if (dead_check(philo))
-                break;
             eating(philo);
             sleeping(philo);
         }
