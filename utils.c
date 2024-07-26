@@ -60,30 +60,18 @@ int	ft_print(t_philo *philo, char *state)
 {
 	pthread_mutex_lock(philo->message);
 	if (ft_strcmp(state, "fork") == 0)
-	{
 		printf("%zu %d has taken a fork\n", get_current_time() - philo->t_data->start_time, philo->id);
-		pthread_mutex_unlock(philo->message);
-	}
 	else if (ft_strcmp(state, "eating") == 0)
-	{
 		printf("%zu %d is eating\n", get_current_time() - philo->t_data->start_time, philo->id);
-		pthread_mutex_unlock(philo->message);
-	}
 	else if (ft_strcmp(state, "sleeping") == 0)
-	{
 		printf("%zu %d is sleeping\n", get_current_time() - philo->t_data->start_time, philo->id);
-		pthread_mutex_unlock(philo->message);
-	}
 	else if (ft_strcmp(state, "thinking") == 0)
-	{
 		printf("%zu %d is thinking\n", get_current_time() - philo->t_data->start_time,  philo->id);
-		pthread_mutex_unlock(philo->message);
-	}
 	else
 	{
 		printf("%zu %d died\n", get_current_time() - philo->t_data->start_time, philo->id);
-   		pthread_mutex_unlock(philo->message);
+		return (EXIT_FAILURE);
 	}
 	pthread_mutex_unlock(philo->message);
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

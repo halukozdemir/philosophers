@@ -17,7 +17,7 @@ typedef struct s_philo
 {
 	pthread_t		thread;
 	int				id;
-	int				fake_id;
+	int				chair_no;
 	size_t			time_of_last_meal;
 	int				nbr_of_meals;
 	int				*number_of_philo;
@@ -38,7 +38,7 @@ typedef struct s_data
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				nbr_of_times_eat;
-	size_t			start_time;
+	size_t			start_time;		
 	t_philo			philo[PHILO_MAX];
 	pthread_mutex_t	forks[PHILO_MAX];
 	pthread_mutex_t	message;

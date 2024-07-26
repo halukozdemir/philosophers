@@ -47,7 +47,7 @@ int	init_philos(t_data *data)
 	while(i < data->number_of_philo)
 	{
 		data->philo[i].id = i + 1;
-		data->philo[i].fake_id = i + 1;
+		data->philo[i].chair_no = i + 1;
 		data->philo[i].nbr_of_meals = 0;
 		data->philo[i].end = &data->end;
 		data->philo[i].number_of_philo = &data->number_of_philo;
