@@ -24,6 +24,7 @@ int	init_forks(t_data *data)
 	{
 		pthread_mutex_init(&data->forks[i], NULL);
 		pthread_mutex_init(&data->philo[i].philo_id, NULL);
+		pthread_mutex_init(&data->philo[i].last_meal_mutex, NULL);
 		i++;
 	}
 	i = 0;
