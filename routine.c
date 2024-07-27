@@ -64,6 +64,7 @@ int philo_start(t_data *data)
     {
         data->philo[i].time_of_last_meal = get_current_time();
         pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
+		usleep(100);
         i++;
     }
     while (1)
