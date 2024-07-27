@@ -73,7 +73,7 @@ int	philo_start(t_data *data)
 			if ((get_current_time() - data->philo[j].time_of_last_meal) >= data->timo_to_die + 10)
 			{
 				ft_print(&data->philo[j], "died");
-				exit(1);
+				return (EXIT_FAILURE);
 			}
 			j++;
 		}
