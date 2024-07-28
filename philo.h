@@ -62,7 +62,6 @@ int	ft_isdigit(int c);
 size_t	get_current_time();
 void	ft_usleep(size_t	ms);
 int	ft_print(t_philo *philo, char *state);
-int	ft_strcmp(char *s1, char *s2);
 int    dead_check(t_philo *philo);
 
 #endif

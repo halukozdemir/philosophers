@@ -59,19 +59,7 @@ void	ft_usleep(size_t	ms)
 int	ft_print(t_philo *philo, char *state)
 {
 	pthread_mutex_lock(philo->message);
-	if (ft_strcmp(state, "fork") == 0)
-		printf("%zu %d has taken a fork\n", get_current_time() - philo->t_data->start_time, philo->id);
-	else if (ft_strcmp(state, "eating") == 0)
-		printf("%zu %d is eating\n", get_current_time() - philo->t_data->start_time, philo->id);
-	else if (ft_strcmp(state, "sleeping") == 0)
-		printf("%zu %d is sleeping\n", get_current_time() - philo->t_data->start_time, philo->id);
-	else if (ft_strcmp(state, "thinking") == 0)
-		printf("%zu %d is thinking\n", get_current_time() - philo->t_data->start_time,  philo->id);
-	else
-	{
-		printf("%zu %d died\n", get_current_time() - philo->t_data->start_time, philo->id);
-		return (EXIT_FAILURE);
-	}
+	printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,  philo->id, state);
 	pthread_mutex_unlock(philo->message);
 	return (EXIT_SUCCESS);
 }
