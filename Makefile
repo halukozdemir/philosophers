@@ -1,7 +1,7 @@
 NAME = philo
 SRC = init.c main.c utils.c utils2.c routine.c
 OBJ := $(SRC:.c=.o)
-CFLAGS = #-fsanitize=thread #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=thread #-Wall -Wextra -Werror
 CC = gcc
 
 all: $(NAME)
