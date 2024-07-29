@@ -50,7 +50,7 @@ void *routine(void *arg) {
             philo->chair_no = (philo->chair_no + 1) % (philo->t_data->number_of_philo + 1);
         else
             philo->chair_no = 1;
-        printf("%d numaralı filozofun yeni sandalye numarası: %d\n", philo->id, philo->chair_no);
+        //printf("%d numaralı filozofun yeni sandalye numarası: %d\n", philo->id, philo->chair_no);
     }
     return NULL;
 }
@@ -61,11 +61,11 @@ int philo_start(t_data *data)
 
     i = 0;
     data->start_time = get_current_time();
-    while(i < data->number_of_philo)
+    while (i < data->number_of_philo)
     {
         data->philo[i].time_of_last_meal = get_current_time();
         pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
-		usleep(100);
+        pthread_detach(data->philo[i].thread);
         i++;
     }
     while (1)
@@ -83,12 +83,6 @@ int philo_start(t_data *data)
             pthread_mutex_unlock(&data->philo[j].last_meal_mutex);
             j++;
         }
-    }
-    i = 0;
-    while(i < data->number_of_philo)
-    {
-        pthread_join(data->philo[i].thread, NULL);
-        i++;
     }
     return (EXIT_SUCCESS);
 }

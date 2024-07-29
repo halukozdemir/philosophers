@@ -33,4 +33,5 @@ int main(int argc, char **argv)
 	if (init_all(data, argc, argv) && printf("%s", ERR_INIT))
 		return (EXIT_FAILURE);
 	philo_start(data);
+	//system ("leaks philo");
 }
