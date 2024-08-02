@@ -6,8 +6,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/halozdem/Desktop/philoenyeni",
-      "program": "/Users/halozdem/Desktop/philoenyeni/build/Debug/outDebug"
+      "cwd": "/Users/halozdem/Desktop/philo",
+      "program": "/Users/halozdem/Desktop/philo/build/Debug/outDebug"
     }
   ]
 }

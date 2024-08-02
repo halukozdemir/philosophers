@@ -46,11 +46,7 @@ void *routine(void *arg) {
             eating(philo);
             sleeping(philo);
         }
-        if (philo->chair_no != (philo->t_data->number_of_philo))
-            philo->chair_no = (philo->chair_no + 1) % (philo->t_data->number_of_philo + 1);
-        else
-            philo->chair_no = 1;
-        //printf("%d numaralı filozofun yeni sandalye numarası: %d\n", philo->id, philo->chair_no);
+        philo->chair_no = (philo->chair_no % philo->t_data->number_of_philo) + 1;
     }
     return NULL;
 }
@@ -65,6 +61,7 @@ int philo_start(t_data *data)
     {
         data->philo[i].time_of_last_meal = get_current_time();
         pthread_create(&data->philo[i].thread, NULL, routine, (void *)&data->philo[i]);
+		usleep(100);
         pthread_detach(data->philo[i].thread);
         i++;
     }
