@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:20 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/02 17:32:22 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:20:40 by beyza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_print(t_philo *philo, char *state)
 {
 	pthread_mutex_lock(philo->message);
 	printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,
-		philo->id, state);
+		philo->id + 1, state);
 	pthread_mutex_unlock(philo->message);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:32:02 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/02 17:32:03 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:58:32 by beyza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,9 @@ size_t				get_current_time(void);
 void				ft_usleep(size_t ms);
 int					ft_print(t_philo *philo, char *state);
 void				dead_check(t_data *data);
+void				thinking(t_philo *philo);
+void				sleeping(t_philo *philo);
+void				eating(t_philo *philo);
+int					clean_all(t_data *data);
 
 #endif

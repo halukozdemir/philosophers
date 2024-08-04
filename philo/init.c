@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:05 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/02 17:31:33 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/04 18:20:20 by beyza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	init_philos(t_data *data)
 	i = 0;
 	while (i < data->number_of_philo)
 	{
-		data->philo[i].id = i + 1;
+		data->philo[i].id = i;
 		data->philo[i].chair_no = i + 1;
 		data->philo[i].eat_count = 0;
 		data->philo[i].end = &data->end;
@@ -74,7 +74,6 @@ int	init_philos(t_data *data)
 int	init_data(t_data *data, int argc, char **argv)
 {
 	data->number_of_philo = ft_atol(argv[1]);
-	printf("BURDAYIM BE BURDAYIM\n");
 	data->timo_to_die = ft_atol(argv[2]);
 	data->time_to_eat = ft_atol(argv[3]);
 	data->time_to_sleep = ft_atol(argv[4]);
