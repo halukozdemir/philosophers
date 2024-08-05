@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:05 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/04 18:20:20 by beyza            ###   ########.fr       */
+/*   Updated: 2024/08/05 19:44:13 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,35 +17,43 @@ int	init_mutex(t_data *data)
 	int	i;
 
 	i = 0;
-	pthread_mutex_init(&data->end_mutex, NULL);
-	pthread_mutex_init(&data->message, NULL);
+	data->mutexes[0] = data->end_mutex;
+	if (pthread_mutex_init(&data->end_mutex, NULL))
+		data->mutexes_err[0] = 0;
+	data->mutexes[1] = data->message;
+	if (pthread_mutex_init(&data->message, NULL))
+		data->mutexes_err[1] = 0;
 	while (i < data->number_of_philo)
 	{
 		data->philo[i].message = &data->message;
 		data->philo[i].end_mutex = &data->end_mutex;
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (0);
 }
 
 int	init_forks(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	while (i < data->number_of_philo)
+	i = -1;
+	while (++i < data->number_of_philo)
 	{
-		pthread_mutex_init(&data->forks[i], NULL);
-		pthread_mutex_init(&data->philo[i].philo_id, NULL);
-		pthread_mutex_init(&data->philo[i].last_meal_mutex, NULL);
-		i++;
+		data->mutexes[i] = data->forks[i];
+		if (pthread_mutex_init(&data->forks[i], NULL))
+			data->mutexes_err[i] = 0;
+		data->mutexes[i] = data->philo[i].last_meal_mutex;
+		if (pthread_mutex_init(&data->philo[i].last_meal_mutex, NULL))
+			data->mutexes_err[i] = 0;
+		data->mutexes[i] = data->philo[i].philo_id;
+		if (pthread_mutex_init(&data->philo[i].philo_id, NULL))
+			data->mutexes_err[i] = 0;
 	}
-	i = 0;
-	while (i < data->number_of_philo - 1)
+	i = -1;
+	while (++i < data->number_of_philo - 1)
 	{
 		data->philo[i].l_fork = &data->forks[i];
 		data->philo[i].r_fork = &data->forks[i + 1];
-		i++;
 	}
 	data->philo[i].l_fork = &data->forks[i];
 	data->philo[i].r_fork = &data->forks[0];
@@ -82,6 +90,15 @@ int	init_data(t_data *data, int argc, char **argv)
 	else
 		data->nbr_of_times_eat = -1;
 	data->end = false;
+	int	i;
+
+	i = 0;
+	while (i < PHILO_MAX)
+	{
+		data->mutexes_err[i] = 1;
+		i++;
+	}
+
 	return (EXIT_SUCCESS);
 }
 

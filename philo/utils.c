@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:20 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/04 18:20:40 by beyza            ###   ########.fr       */
+/*   Updated: 2024/08/05 19:56:01 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,20 @@
 long	ft_atol(char *str)
 {
 	int		i;
-	long	sign;
 	long	result;
 
 	i = 0;
-	sign = 1;
 	result = 0;
 	if (!str[i])
 		return (0);
 	while (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && str[i])
-		i++;
-	if (str[i] == '-')
-	{
-		sign *= -1;
-		i++;
-	}
-	else if (str[i] == '+')
 		i++;
 	while ((str[i] >= '0' && str[i] <= '9') && str[i])
 	{
 		result = (result * 10) + (str[i] - '0');
 		i++;
 	}
-	return (sign * result);
+	return (result);
 }
 
 int	ft_isdigit(int c)
@@ -70,8 +61,13 @@ void	ft_usleep(size_t ms)
 int	ft_print(t_philo *philo, char *state)
 {
 	pthread_mutex_lock(philo->message);
-	printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,
-		philo->id + 1, state);
+	if (!((get_current_time()
+				- philo->time_of_last_meal) >= philo->t_data->timo_to_die
+			&& !philo->t_data->end))
+	{
+		printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,
+			philo->id + 1, state);
+	}
 	pthread_mutex_unlock(philo->message);
 	return (EXIT_SUCCESS);
 }

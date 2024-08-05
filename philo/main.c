@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:12 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/04 18:21:25 by beyza            ###   ########.fr       */
+/*   Updated: 2024/08/05 18:27:19 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,25 @@ int	argv_check(char **argv)
 	j = 0;
 	while (argv[i])
 	{
+		if (argv[i][0] == '0')
+			return (EXIT_FAILURE);
 		while (argv[i][j])
 		{
 			if (!ft_isdigit(argv[i][j]))
-				return (0);
+				return (EXIT_FAILURE);
 			j++;
 		}
 		j = 0;
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (((argc < 5 || argc > 6) || !argv_check(argv)) && printf("%s", ERR_ARG))
+	if (((argc < 5 || argc > 6) || argv_check(argv)) && printf("%s", ERR_ARG))
 		return (EXIT_FAILURE);
 	if (ft_atol(argv[1]) > 200)
 	{

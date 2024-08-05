@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beyarsla <beyarsla@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:16 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/04 18:46:15 by beyarsla         ###   ########.fr       */
+/*   Updated: 2024/08/05 19:55:12 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	dead_check(t_data *data)
+int	dead_check(t_data *data)
 {
 	int	j;
 
@@ -35,6 +35,7 @@ void	dead_check(t_data *data)
 			j++;
 		}
 	}
+	return (data->end);
 }
 
 void	*routine(void *arg)
@@ -47,13 +48,13 @@ void	*routine(void *arg)
 		if (philo->chair_no % 2 != 0
 			&& philo->chair_no != philo->t_data->number_of_philo)
 		{
-			eating(philo);
+			odd_eat(philo);
 			sleeping(philo);
 		}
 		else
 		{
 			thinking(philo);
-			eating(philo);
+			even_eat(philo);
 			sleeping(philo);
 		}
 		philo->chair_no = (philo->chair_no % philo->t_data->number_of_philo)
@@ -61,6 +62,7 @@ void	*routine(void *arg)
 		if (philo->eat_count == philo->t_data->nbr_of_times_eat)
 			philo->t_data->end = true;
 	}
+	// printf("%d numaralı filozof %d kez yemek yedi\n", philo->id +1, philo->eat_count);
 	return (NULL);
 }
 
@@ -75,9 +77,19 @@ int	philo_start(t_data *data)
 		data->philo[i].time_of_last_meal = get_current_time();
 		pthread_create(&data->philo[i].thread, NULL, routine,
 			(void *)&data->philo[i]);
-		usleep(100);
+		// usleep(100);
 		pthread_detach(data->philo[i].thread);
-		i++;
+		i = i + 2;
+	}
+	i = 1;
+	while (i < data->number_of_philo)
+	{
+		data->philo[i].time_of_last_meal = get_current_time();
+		pthread_create(&data->philo[i].thread, NULL, routine,
+			(void *)&data->philo[i]);
+		// usleep(100);
+		pthread_detach(data->philo[i].thread);
+		i = i + 2;
 	}
 	dead_check(data);
 	return (EXIT_SUCCESS);
