@@ -3,3 +3,7 @@
 ##########./philo 4 410 200 200 -> data race
 ##########./philo 4 310 200 100 -> ölmeden sonra devam ediyor
 ##########./philo 3 410 200 200 ->data race
+
+
+
+hepsi giderildi
