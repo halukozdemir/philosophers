@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:32:02 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/05 19:44:46 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/04 16:58:32 by beyza            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ typedef struct s_data
 	pthread_mutex_t	message;
 	pthread_mutex_t	end_mutex;
 	bool			end;
-	pthread_mutex_t	mutexes[PHILO_MAX];
-	int				mutexes_err[PHILO_MAX];
 }					t_data;
 
 int					init_mutex(t_data *data);
@@ -74,12 +72,10 @@ int					ft_isdigit(int c);
 size_t				get_current_time(void);
 void				ft_usleep(size_t ms);
 int					ft_print(t_philo *philo, char *state);
-int				dead_check(t_data *data);
+void				dead_check(t_data *data);
 void				thinking(t_philo *philo);
 void				sleeping(t_philo *philo);
 void				eating(t_philo *philo);
 int					clean_all(t_data *data);
-void 				odd_eat(t_philo *philo);
-void 				even_eat(t_philo *philo);
 
 #endif

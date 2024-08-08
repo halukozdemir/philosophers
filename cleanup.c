@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 18:19:07 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/05 18:19:08 by halozdem         ###   ########.fr       */
+/*   Created: 2024/08/03 16:29:18 by beyarsla          #+#    #+#             */
+/*   Updated: 2024/08/08 14:15:57 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	clean_all(t_data *data)
 
 	i = 0;
 	err = 0;
+
 	if (!pthread_mutex_destroy(&data->message))
 		err = 1;
 	if (!pthread_mutex_destroy(&data->end_mutex))

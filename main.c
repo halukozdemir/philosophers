@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:12 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/05 18:27:19 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/09 00:14:43 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	argv_check(char **argv)
 	j = 0;
 	while (argv[i])
 	{
-		if (argv[i][0] == '0')
+		if (argv[i] != 0)
 			return (EXIT_FAILURE);
 		while (argv[i][j])
 		{
