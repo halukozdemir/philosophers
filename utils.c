@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:20 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/09 00:13:09 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/09 14:31:00 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,6 @@ long	ft_atol(char *str)
 		return (0);
 	while (((str[i] >= 9 && str[i] <= 13) || str[i] == 32) && str[i])
 		i++;
-	if (str[i] == '-')
-	{
-		sign *= -1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
 	while ((str[i] >= '0' && str[i] <= '9') && str[i])
 	{
 		result = (result * 10) + (str[i] - '0');
@@ -43,8 +36,8 @@ long	ft_atol(char *str)
 int	ft_isdigit(int c)
 {
 	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 size_t	get_current_time(void)
@@ -69,14 +62,14 @@ void	ft_usleep(size_t ms)
 
 int	ft_print(t_philo *philo, char *state)
 {
-	pthread_mutex_lock(philo->message);
+	pthread_mutex_lock(&philo->t_data->message);
 	pthread_mutex_lock(&philo->t_data->end_mutex);
 	if (philo->t_data->end == false)
 	{
-	printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,
-		philo->id + 1, state);
+		printf("%zu %d %s\n", get_current_time() - philo->t_data->start_time,
+			philo->id, state);
 	}
 	pthread_mutex_unlock(&philo->t_data->end_mutex);
-	pthread_mutex_unlock(philo->message);
+	pthread_mutex_unlock(&philo->t_data->message);
 	return (EXIT_SUCCESS);
 }

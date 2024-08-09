@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:32:35 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/09 00:12:56 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:17:24 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,27 @@ void	sleeping(t_philo *philo)
 	ft_usleep(philo->t_data->time_to_sleep);
 }
 
-void	eating(t_philo *philo)
+void	odd_eating(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
 	ft_print(philo, "has taken a fork");
 	pthread_mutex_lock(philo->r_fork);
+	ft_print(philo, "has taken a fork");
+	pthread_mutex_lock(&philo->last_meal_mutex);
+	philo->time_of_last_meal = get_current_time();
+	philo->eat_count++;
+	pthread_mutex_unlock(&philo->last_meal_mutex);
+	ft_print(philo, "is eating");
+	ft_usleep(philo->t_data->time_to_eat);
+	pthread_mutex_unlock(philo->r_fork);
+	pthread_mutex_unlock(philo->l_fork);
+}
+
+void	even_eating(t_philo *philo)
+{
+	pthread_mutex_lock(philo->r_fork);
+	ft_print(philo, "has taken a fork");
+	pthread_mutex_lock(philo->l_fork);
 	ft_print(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->last_meal_mutex);
 	philo->time_of_last_meal = get_current_time();

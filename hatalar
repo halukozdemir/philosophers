@@ -1,9 +1,0 @@
-./philo 4 410 0 0 -> ölmemeleri lazım
-##########./philo 200 410 200 200 -> ölme mesajından sonra akış devam ediyor
-##########./philo 4 410 200 200 -> data race
-##########./philo 4 310 200 100 -> ölmeden sonra devam ediyor
-##########./philo 3 410 200 200 ->data race
-
-
-
-hepsi giderildi

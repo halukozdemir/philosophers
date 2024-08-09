@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: beyza <beyza@student.42.fr>                +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:32:02 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/04 16:58:32 by beyza            ###   ########.fr       */
+/*   Updated: 2024/08/09 16:17:15 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <errno.h>
 # include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -32,15 +33,9 @@ typedef struct s_philo
 	int				chair_no;
 	size_t			time_of_last_meal;
 	int				eat_count;
-	int				*number_of_philo;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*message;
-	pthread_mutex_t	*end_mutex;
-	pthread_mutex_t	philo_id;
 	pthread_mutex_t	last_meal_mutex;
-	bool			*end;
-	bool			is_thinking;
 	struct s_data	*t_data;
 }					t_philo;
 
@@ -59,12 +54,7 @@ typedef struct s_data
 	bool			end;
 }					t_data;
 
-int					init_mutex(t_data *data);
-int					init_forks(t_data *data);
-int					init_philos(t_data *data);
-int					init_data(t_data *data, int argc, char **argv);
 int					init_all(t_data *data, int argc, char **argv);
-int					argv_check(char **argv);
 void				*routine(void *arg);
 int					philo_start(t_data *data);
 long				ft_atol(char *str);
@@ -73,9 +63,11 @@ size_t				get_current_time(void);
 void				ft_usleep(size_t ms);
 int					ft_print(t_philo *philo, char *state);
 void				dead_check(t_data *data);
+void				dead_calc(t_data *data);
 void				thinking(t_philo *philo);
 void				sleeping(t_philo *philo);
-void				eating(t_philo *philo);
-int					clean_all(t_data *data);
+void				clean_all(t_data *data);
+void				even_eating(t_philo *philo);
+void				odd_eating(t_philo *philo);
 
 #endif

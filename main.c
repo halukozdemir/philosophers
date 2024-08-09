@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: halozdem <halozdem@student.42.fr>          +#+  +:+       +#+        */
+/*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:12 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/09 00:42:22 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/09 15:23:56 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	ft_strlen(const char *s)
+static size_t	ft_strlen(const char *s)
 {
 	int	i;
 
@@ -24,7 +24,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+static int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
 	size_t	i;
 
@@ -40,7 +40,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-int	argv_check(char **argv)
+static int	argv_check(char **argv)
 {
 	int	i;
 	int	j;
@@ -53,7 +53,7 @@ int	argv_check(char **argv)
 			return (EXIT_FAILURE);
 		while (argv[i][j])
 		{
-			if (!ft_isdigit(argv[i][j]))
+			if (ft_isdigit(argv[i][j]))
 				return (EXIT_FAILURE);
 			j++;
 		}
@@ -77,8 +77,5 @@ int	main(int argc, char **argv)
 	if (init_all(&data, argc, argv) && printf("%s", ERR_INIT))
 		return (EXIT_FAILURE);
 	philo_start(&data);
-	while (1)
-		if (data.end == true)
-			break ;
 	clean_all(&data);
 }
