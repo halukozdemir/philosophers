@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:16 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/09 16:20:48 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/15 20:27:59 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static int	routine_helper(t_data *data, int i)
 
 void	life_cycle(t_philo *philo)
 {
-	if (philo->chair_no % 2 != 0
-		&& philo->chair_no != philo->t_data->number_of_philo)
+	if (philo->chair_no % 2 == 0
+		&& philo->chair_no == philo->t_data->number_of_philo)
 	{
 		odd_eating(philo);
 		sleeping(philo);
@@ -89,8 +89,20 @@ int	philo_start(t_data *data)
 		if (pthread_create(&data->philo[i].thread, NULL, routine,
 				(void *)&data->philo[i]))
 			return (EXIT_FAILURE);
-		// usleep(100);
-		i++;
+		usleep(100);
+		i+=2;
+	}
+	i = 1;
+	while (i < data->number_of_philo)
+	{
+		pthread_mutex_lock(&data->philo[i].last_meal_mutex);
+		data->philo[i].time_of_last_meal = get_current_time();
+		pthread_mutex_unlock(&data->philo[i].last_meal_mutex);
+		if (pthread_create(&data->philo[i].thread, NULL, routine,
+				(void *)&data->philo[i]))
+			return (EXIT_FAILURE);
+		usleep(100);
+		i+=2;
 	}
 	dead_check(data);
 	i = -1;
