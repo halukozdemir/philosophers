@@ -6,7 +6,7 @@
 /*   By: halozdem <halozdem@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 17:31:16 by halozdem          #+#    #+#             */
-/*   Updated: 2024/08/15 21:43:32 by halozdem         ###   ########.fr       */
+/*   Updated: 2024/08/18 13:43:52 by halozdem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	routine_helper(t_data *data, int i)
 void	life_cycle(t_philo *philo)
 {
 	if (philo->chair_no % 2 == 0
-		&& philo->chair_no == philo->t_data->number_of_philo)
+		|| philo->chair_no == philo->t_data->number_of_philo)
 	{
 		thinking(philo);
 		odd_eating(philo);
