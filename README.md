@@ -15,7 +15,7 @@ Bu proje, klasik "Dining Philosophers Problem" (Yemek Yiyen Filozoflar Problemi)
 
 ### 🔧 Çözüm Yaklaşımı
 
-Proje, **"Masa Döndürme Algoritması"** (Round Robin Algorithm) kullanarak deadlock'u önler. Her filozof sadece sol çatalını alır, sonra sağ çatalını alır. Bu yaklaşım, tüm filozofların aynı anda sol çatalını almasını engelleyerek deadlock'u önler.
+Proje, **"Masa Döndürme Algoritması"** kullanarak deadlock'u önler. Her filozof sadece sol çatalını alır, sonra sağ çatalını alır. Bu yaklaşım, tüm filozofların aynı anda sol çatalını almasını engelleyerek deadlock'u önler.
 
 ## 🏗️ Proje Yapısı
 
